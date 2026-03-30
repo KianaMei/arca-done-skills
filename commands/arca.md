@@ -18,21 +18,25 @@ Arguments: $ARGUMENTS
 
 2. Locate the scraper directory. Check in order:
    - Environment variable `ARCA_SCRAPER_DIR`
+   - `C:/mycode/somethingsmall/arca_scraper/`
    - `~/arca-done-skills/scraper/`
    - The current working directory (if it contains `arca_scraper_dp.py`)
    If not found, tell the user to set `ARCA_SCRAPER_DIR` or clone the repo.
 
-3. Run the scraper (timeout 10 minutes):
-   ```
+3. If a Chinese name was provided, pass it as the third CLI argument. Run the scraper (timeout 10 minutes):
+   ```bash
+   # With Chinese name:
+   cd "<scraper_dir>" && python arca_scraper_dp.py "<url>" "downloads" "<chinese_name>"
+
+   # Without Chinese name (translate after):
    cd "<scraper_dir>" && python arca_scraper_dp.py "<url>" "downloads"
    ```
    Note: a Chromium window will pop up for Cloudflare verification.
 
-4. After scraping completes, find the newly created directory under `<scraper_dir>/downloads/` (it will have a Korean name matching the page title).
+4. After scraping completes, find the newly created directory under `<scraper_dir>/downloads/`.
 
-5. Translate and rename the directory:
-   - If the user provided a Chinese name: rename to `<korean_title>_<user_chinese_name>`
-   - If no Chinese name was provided: YOU translate the Korean title to Chinese, then rename to `<korean_title>_<your_chinese_translation>`
+5. If no Chinese name was provided in step 1, translate and rename:
+   - YOU translate the Korean title to Chinese, then rename: `<korean_title>_<your_chinese_translation>`
    - Translation guidelines:
      - Game names: use the commonly known Chinese name (e.g. 트릭컬=诡术妄想, 블루아카이브=蔚蓝档案, 원신=原神, 명일방주=明日方舟)
      - 콘/이모티콘 = 表情包
