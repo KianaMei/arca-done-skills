@@ -16,12 +16,10 @@ Arguments: $ARGUMENTS
 
 1. Parse the first argument as the arca.live URL. Remaining arguments (if any) are the user-provided Chinese name.
 
-2. Locate the scraper directory. Check in order:
-   - Environment variable `ARCA_SCRAPER_DIR`
-   - `C:/mycode/somethingsmall/arca_scraper/`
-   - `~/arca-done-skills/scraper/`
-   - The current working directory (if it contains `arca_scraper_dp.py`)
-   If not found, tell the user to set `ARCA_SCRAPER_DIR` or clone the repo.
+2. Locate the scraper directory. Check in order (use the first one that contains `arca_scraper_dp.py`):
+   - `{{SCRAPER_DIR}}`
+   - The current working directory
+   If not found, tell the user to re-run the install script.
 
 3. If a Chinese name was provided, pass it as the third CLI argument. Run the scraper (timeout 10 minutes):
    ```bash

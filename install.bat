@@ -1,32 +1,30 @@
 @echo off
 chcp 65001 >/dev/null
-setlocal
+setlocal enabledelayedexpansion
 
 set REPO_DIR=%~dp0
+set SCRAPER_DIR=%REPO_DIR%scraper
 set CLAUDE_COMMANDS=%USERPROFILE%\.claude\commands
 
 echo === Arca.live Emoticon Skill Installer ===
 echo.
 
+:: 1. Install Python dependencies
+echo Installing Python dependencies...
+pip install -r "%SCRAPER_DIR%\requirements.txt" --quiet
+echo [OK] Dependencies installed
+
+:: 2. Copy skill and inject scraper path
 if not exist "%CLAUDE_COMMANDS%" mkdir "%CLAUDE_COMMANDS%"
-copy /Y "%REPO_DIR%commands\arca.md" "%CLAUDE_COMMANDS%\arca.md" >/dev/null
+powershell -Command "(Get-Content '%REPO_DIR%commands\arca.md') -replace '\{\{SCRAPER_DIR\}\}', '%SCRAPER_DIR%' | Set-Content '%CLAUDE_COMMANDS%\arca.md'"
 echo [OK] Skill installed: %CLAUDE_COMMANDS%\arca.md
 
 echo.
-echo Installing Python dependencies...
-pip install -r "%REPO_DIR%scraper\requirements.txt" --quiet
-echo [OK] Dependencies installed
-
-set SCRAPER_DIR=%REPO_DIR%scraper
+echo === Done! ===
+echo Restart your AI coding assistant, then use:  /arca https://arca.live/e/XXXXX
 echo.
-echo === Setup Complete ===
-echo.
-echo Run:  setx ARCA_SCRAPER_DIR "%SCRAPER_DIR%"
-echo.
-echo Optional:
+echo Optional (for auto-login):
 echo   setx ARCA_USERNAME "your_username"
 echo   setx ARCA_PASSWORD "your_password"
-echo.
-echo Then restart terminal and use:  /arca https://arca.live/e/XXXXX
 echo.
 pause
